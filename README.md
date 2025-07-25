@@ -11,6 +11,6 @@ A minimal Flask web app containerized with Docker and tested via GitHub Actions 
 
 ```bash
 docker build -t flask-app .
-docker run -p 5000:5000 flask-app
+docker run -p 8080:8080 flask-app
 ```
-Go to: http://localhost:5000
+Go to: http://localhost:8080
