@@ -1,9 +1,6 @@
 """Test semplice per verificare che Flask funzioni"""
 
 try:
-    import flask
-    print("✅ Flask importato correttamente")
-    
     # Test import della nostra app
     from app.main import app
     print("✅ App importata correttamente")
