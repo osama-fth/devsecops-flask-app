@@ -15,7 +15,7 @@ try:
             exit(1)
 
     print("🎉 Tutti i test sono passati!")
-    
+
 except Exception as e:
     print(f"❌ Errore: {e}")
     exit(1)
