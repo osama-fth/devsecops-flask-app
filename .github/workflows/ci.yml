@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Run Tests
     runs-on: ubuntu-latest
     
     steps:
@@ -19,14 +20,31 @@ jobs:
       with:
         python-version: '3.11'
     
-    - name: Install Flask
-      run: pip install flask
+    - name: Install dependencies
+      run: pip install -r requirements.txt
     
     - name: Run simple test
       run: python test_simple.py
+  
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: test  # Esegue solo se i test passano
     
-    - name: Check app runs
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Build Docker image
       run: |
-        python app/main.py &
-        sleep 3
-        echo "App started successfully!"
+        docker build -t flask-app:latest .
+        echo "✅ Docker image built successfully!"
+    
+    - name: Test Docker container
+      run: |
+        docker run -d -p 8080:8080 --name test-app flask-app:latest
+        sleep 5
+        docker logs test-app
+        docker stop test-app
+        docker rm test-app
+        echo "✅ Docker container tested successfully!"
